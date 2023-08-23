@@ -2,6 +2,8 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
+from parse_quotes import get_random_quote
+
 
 class QuotesStates(StatesGroup):
     running = State()
@@ -16,7 +18,13 @@ async def quotes_start(message: types.Message, state: FSMContext):
 
 
 async def quotes_now(message: types.Message, state: FSMContext):
-    await message.answer("Цитита сейчас")
+    # data = await state.get_data()
+    quotes_data = get_random_quote(True)
+
+    await message.answer(
+        f"{quotes_data['quotes']}\nАвтор: {quotes_data['author']}",
+        parse_mode=types.ParseMode.HTML,
+    )
 
 
 def register_handlers_quotes(dp: Dispatcher):
