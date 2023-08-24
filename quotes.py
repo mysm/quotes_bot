@@ -1,3 +1,6 @@
+from typing import Set
+import asyncio
+
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -9,11 +12,26 @@ class QuotesStates(StatesGroup):
     running = State()
 
 
-# Обратите внимание: есть второй аргумент
+async def quotes_every_half_hour(bot, user_id):
+    while True:
+        quotes_data = get_random_quote()
+        await bot.send_message(
+            user_id,
+            f'{quotes_data["quotes"]}\nАвтор: {quotes_data["author"]}',
+        )
+        await asyncio.sleep(1800)
+
+
+async def quotes_cancel():
+    tasks: Set[asyncio.Task] = asyncio.all_tasks()
+    [task.cancel() for task in tasks]
+
+
 async def quotes_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
-    await message.answer(f"Цитита каждые полчаса на {user_id}")
     await state.update_data(user_id=user_id)
+    loop = asyncio.get_event_loop()
+    loop.create_task(quotes_every_half_hour(message.bot, user_id))
     await state.set_state(QuotesStates.running)
 
 

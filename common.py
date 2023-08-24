@@ -2,6 +2,7 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 
+from quotes import quotes_cancel
 
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()
@@ -12,6 +13,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
 
 
 async def cmd_cancel(message: types.Message, state: FSMContext):
+    await quotes_cancel()
     await state.finish()
     await message.answer(
         "Действие отменено", reply_markup=types.ReplyKeyboardRemove()
