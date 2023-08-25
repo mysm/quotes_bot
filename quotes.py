@@ -14,7 +14,7 @@ class QuotesStates(StatesGroup):
 
 async def quotes_every_half_hour(bot, user_id):
     while True:
-        quotes_data = get_random_quote()
+        quotes_data = get_random_quote(True)
         await bot.send_message(
             user_id,
             f'{quotes_data["quotes"]}\nАвтор: {quotes_data["author"]}',

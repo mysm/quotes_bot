@@ -31,7 +31,7 @@ def get_random_quote(clear_cache=False):
         href = find_tag(tag, "a")
         if href:
             result["source"] = href["href"]
-            result["author"] = remove_punctuation(href.text.split()[0])
+            result["author"] = remove_punctuation(href.text.split('\n')[1].lstrip())
 
     return result
 
