@@ -7,13 +7,13 @@ from quotes import quotes_cancel
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(
-        "Привет, я бот-цитатник: /quotes - цитата каждые полчаса, /now - цитата сейчас.",
+        "Привет, я бот-цитатник: /quotes - цитата через заданное время, /now - цитата сейчас.",
         reply_markup=types.ReplyKeyboardRemove(),
     )
 
 
 async def cmd_cancel(message: types.Message, state: FSMContext):
-    await quotes_cancel()
+    await quotes_cancel(message.from_user.id)
     await state.finish()
     await message.answer(
         "Действие отменено", reply_markup=types.ReplyKeyboardRemove()

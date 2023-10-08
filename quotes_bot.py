@@ -21,10 +21,10 @@ logger = logging.getLogger(__name__)
 async def set_commands(bot: Bot):
     commands = [
         BotCommand(
-            command="/quotes", description="Избранные цитаты каждый час"
+            command="/quotes", description="Избранные цитаты через заданное время"
         ),
         BotCommand(
-            command="/cancel", description="Отменить отправку каждый час"
+            command="/cancel", description="Отменить отправку цитат через заданное время"
         ),
         BotCommand(command="/now", description="Цитата сейчас"),
     ]
