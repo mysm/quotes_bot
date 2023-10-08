@@ -47,7 +47,7 @@ async def quotes_process(message: types.Message, state: FSMContext):
     await state.update_data(user_id=user_id)
     loop = asyncio.get_event_loop()
     loop.create_task(
-        quotes_every_half_hour(message.bot, user_id), name=str(user_id)
+        quotes_every_half_hour(message.bot, user_id, time_in_minutes), name=str(user_id)
     )
     await state.set_state(QuotesStates.running)
 
